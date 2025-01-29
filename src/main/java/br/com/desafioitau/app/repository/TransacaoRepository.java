@@ -16,4 +16,12 @@ public class TransacaoRepository {
         this.transacoes.add(transacao);
     }
 
+    public List<Transacao> getTransaction(){
+        return transacoes;
+    }
+
+    public void limparTranscacao(){
+        this.transacoes.clear();
+    }
+
 }
