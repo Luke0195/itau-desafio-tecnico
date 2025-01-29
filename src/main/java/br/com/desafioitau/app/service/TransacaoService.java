@@ -1,10 +1,9 @@
 package br.com.desafioitau.app.service;
 
-import br.com.desafioitau.app.domain.models.Transacao;
 import br.com.desafioitau.app.domain.usecases.transacao.AddTransacao;
 import br.com.desafioitau.app.dtos.TransacaoDto;
 import br.com.desafioitau.app.repository.TransacaoRepository;
-import lombok.AllArgsConstructor;
+
 
 import org.springframework.stereotype.Service;
 
