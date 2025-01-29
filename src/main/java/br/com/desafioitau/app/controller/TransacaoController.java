@@ -11,16 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping
-
 public class TransacaoController {
 
     private final TransacaoService transacaoService;
-    private final TransacaoRepository transacaoRepository;
-
 
     public TransacaoController(TransacaoService transacaoService, TransacaoRepository transacaoRepository){
         this.transacaoService = transacaoService;
-        this.transacaoRepository = transacaoRepository;
     }
 
     @PostMapping(value = "/transacao")
