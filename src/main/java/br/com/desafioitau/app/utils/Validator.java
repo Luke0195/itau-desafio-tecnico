@@ -15,4 +15,5 @@ public class Validator {
     public static  boolean isGreaterThanZero(Double value){
         return  value > 0;
     }
+
 }

@@ -1,6 +1,5 @@
 package br.com.desafioitau.app.controller;
 
-import br.com.desafioitau.app.domain.models.Transacao;
 import br.com.desafioitau.app.dtos.TransacaoDto;
 import br.com.desafioitau.app.repository.TransacaoRepository;
 import br.com.desafioitau.app.service.TransacaoService;
@@ -9,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping
@@ -32,9 +30,11 @@ public class TransacaoController {
     }
 
 
-    @DeleteMapping
+    @DeleteMapping(value = "/transacao")
     public ResponseEntity<Void> limparTransacoes(){
         transacaoService.removeTransacao();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+
 }
