@@ -2,6 +2,7 @@ package br.com.desafioitau.app.service;
 
 import br.com.desafioitau.app.domain.models.Transacao;
 import br.com.desafioitau.app.domain.usecases.transacao.AddTransacao;
+import br.com.desafioitau.app.dtos.TransacaoDto;
 import br.com.desafioitau.app.repository.TransacaoRepository;
 import lombok.AllArgsConstructor;
 
@@ -17,7 +18,7 @@ public class TransacaoService implements AddTransacao {
         this.transacaoRepository = transacaoRepository;
     }
     @Override
-    public void addTransacao(Transacao transacao) {
-        System.out.println(transacao);
+    public void addTransacao(TransacaoDto transacaoDto) {
+        System.out.println(transacaoDto);
     }
 }

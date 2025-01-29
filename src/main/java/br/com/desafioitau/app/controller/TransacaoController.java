@@ -1,6 +1,7 @@
 package br.com.desafioitau.app.controller;
 
 import br.com.desafioitau.app.domain.models.Transacao;
+import br.com.desafioitau.app.dtos.TransacaoDto;
 import br.com.desafioitau.app.service.TransacaoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -25,8 +26,8 @@ public class TransacaoController {
     }
 
     @PostMapping(value = "/transacao")
-    public ResponseEntity<Void> addTransacao(@Valid @RequestBody Transacao transacao){
-         transacaoService.addTransacao(transacao);
+    public ResponseEntity<Void> addTransacao(@Valid @RequestBody TransacaoDto transacaoDto){
+         transacaoService.addTransacao(transacaoDto);
          return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
