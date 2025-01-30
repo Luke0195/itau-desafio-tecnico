@@ -32,9 +32,9 @@ class TransacaoControllerTest {
     private MockMvc mockMvc;
 
 
-    @DisplayName("POST - Deve retornar 400 se o valor da transacao for nulo.")
+    @DisplayName("POST - Deve retornar 400 se o valor da transação for nulo.")
     @Test
-    void deveRetornarBadRequestQuandoOValorDaTransacaoForInvalido() throws Exception{
+    void deveRetornarBadRequestQuandoOValorDaTransacaoForNulo() throws Exception{
         TransacaoDto requestDto = new TransacaoDto(null, OffsetDateTime.now());
         String jsonBody = objectMapper.writeValueAsString(requestDto);
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/transacao")
@@ -45,7 +45,19 @@ class TransacaoControllerTest {
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
+    @DisplayName("POST - Deve retornar 400 se o valor da transação for negativo")
+    @Test
+    void deveRetornarBadRequestQuandoOValorDaTransacaoForNegativo() throws Exception{
+        TransacaoDto requestDto = new TransacaoDto(-30.50, OffsetDateTime.now());
+        String jsonBody = objectMapper.writeValueAsString(requestDto);
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/transacao")
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        );
+        resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
+    }
 
 
 }
