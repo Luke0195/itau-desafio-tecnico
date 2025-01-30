@@ -24,8 +24,6 @@ class TransacaoControllerTest {
 
 
     private TransacaoDto transacaoDto;
-    @InjectMocks
-    private TransacaoService transacaoService;
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
@@ -83,5 +81,24 @@ class TransacaoControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
         );
         resultActions.andExpect(MockMvcResultMatchers.status().isUnprocessableEntity());
+    }
+
+    @DisplayName("POST - Deve retornar 201 quando os dados forem informados corretamente")
+    @Test
+    void  deveRetornarSucessoQuandoOsDadosForemInformadosCorretamente() throws Exception{
+        TransacaoDto transacaoDto= new TransacaoDto(50.0, OffsetDateTime.now());
+        String jsonBody = objectMapper.writeValueAsString(transacaoDto);
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/transacao")
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+        resultActions.andExpect(MockMvcResultMatchers.status().isCreated());
+    }
+
+    @DisplayName("DELETE - Deve remover todas as transacoes")
+    @Test
+    void deveRemoverTodasAsTranscacoesEmCasoDeSucesso() throws Exception{
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.delete("/transacao"));
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
