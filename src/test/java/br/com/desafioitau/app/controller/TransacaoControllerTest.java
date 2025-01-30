@@ -56,8 +56,32 @@ class TransacaoControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
         );
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest());
-
     }
 
+    @DisplayName("POST - Deve retornar 400 se o dataHora da transação for nulo")
+    @Test
+    void deveRetornarBadRequestQuandoADataHoraDaTransacaoForNulo() throws Exception{
+        TransacaoDto requestDto = new TransacaoDto(50.0,null);
+        String jsonBody = objectMapper.writeValueAsString(requestDto);
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/transacao")
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        );
+        resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
 
+    @DisplayName("POST - Deve  retonar 422 quando a dataHora da transação for futura")
+    @Test
+    void deveRetornarUnprocessableEntityQuandoADataHoradaTransacaoForFutura() throws Exception{
+        OffsetDateTime dataFutura = OffsetDateTime.now().plusHours(1);
+        TransacaoDto transacaoDto = new TransacaoDto(50.0, dataFutura);
+        String jsonBody = objectMapper.writeValueAsString(transacaoDto);
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/transacao")
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        );
+        resultActions.andExpect(MockMvcResultMatchers.status().isUnprocessableEntity());
+    }
 }
