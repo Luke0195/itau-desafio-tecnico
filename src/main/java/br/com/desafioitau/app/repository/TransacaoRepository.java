@@ -3,12 +3,12 @@ package br.com.desafioitau.app.repository;
 import br.com.desafioitau.app.domain.models.Transacao;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+
 public class TransacaoRepository {
 
 
@@ -36,4 +36,7 @@ public class TransacaoRepository {
 
     }
 
+    public List<Transacao> getTransacoes() {
+        return transacoes;
+    }
 }

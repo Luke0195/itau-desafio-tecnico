@@ -9,6 +9,7 @@ import br.com.desafioitau.app.repository.TransacaoRepository;
 
 
 import br.com.desafioitau.app.service.exceptions.TransacaoInvalidaException;
+import br.com.desafioitau.app.utils.TransacaoValidator;
 import br.com.desafioitau.app.utils.Validator;
 import org.springframework.stereotype.Service;
 
@@ -19,16 +20,21 @@ import java.util.List;
 public class TransacaoService implements AddTransacao, RemoverTransacao {
 
     private final TransacaoRepository transacaoRepository;
+    private final Validator validator;
+    private final TransacaoValidator transacaoValidator;
 
 
-    public TransacaoService(TransacaoRepository transacaoRepository){
+    public TransacaoService(TransacaoRepository transacaoRepository, Validator validator, TransacaoValidator transacaoValidator){
         this.transacaoRepository = transacaoRepository;
+        this.validator = validator;
+        this.transacaoValidator = transacaoValidator;
+
     }
 
     @Override
     public void addTransacao(TransacaoDto transacaoDto) {
-       validarDataTransacao(transacaoDto);
-       validarValodTransacao(transacaoDto);
+       transacaoValidator.validarDataTransacao(transacaoDto);
+       transacaoValidator.validarValorTransacao(transacaoDto);
        transacaoRepository.addTransacao(Transacao.mapToEntity(transacaoDto));
     }
 
@@ -41,19 +47,6 @@ public class TransacaoService implements AddTransacao, RemoverTransacao {
         List<Transacao> transacaos = transacaoRepository.filtarListaPorMinuto();
         return this.gerarEstatica(transacaos);
     }
-
-    private void validarDataTransacao(TransacaoDto dto){
-        boolean dataTransacaoValida = Validator.isDateInTheFutureComparedToNow(dto.dataHora());
-        if(!dataTransacaoValida) throw new TransacaoInvalidaException(String.format("Data da transação %s está no futuro" +
-                ".", dto.dataHora()));
-    }
-
-    private void validarValodTransacao(TransacaoDto transacaoDto){
-        boolean valorValido = Validator.isGreaterThanZero(transacaoDto.valor());
-        if(!valorValido) throw new TransacaoInvalidaException(String.format("Valor da transação %s é inválido. Deve ser" +
-                " maior que zero.", transacaoDto.valor()));
-    }
-
 
 
     private EstatisticaDto gerarEstatica(List<Transacao> transacaos){

@@ -1,19 +1,24 @@
 package br.com.desafioitau.app.utils;
 
 
+import org.springframework.stereotype.Component;
+
 import java.time.OffsetDateTime;
 
 
+@Component
 public class Validator {
 
     private Validator(){};
 
-    public static boolean isDateInTheFutureComparedToNow(OffsetDateTime currentDate){
+    public  boolean isDateInTheFutureComparedToNow(OffsetDateTime currentDate){
        return currentDate.isBefore(OffsetDateTime.now());
     };
 
-    public static  boolean isGreaterThanZero(Double value){
+    public  boolean isGreaterThanZero(Double value){
         return  value > 0;
     }
+
+
 
 }
